@@ -4,12 +4,22 @@ define(function (require, exports, module) {
     var ContainerSurface = require('samsara/dom/ContainerSurface');
     var SideBar = require('app/SideBar');
 
-    var sideBar = SideBar({
-        size: [150, undefined],
-        origin: [0, 0.5],
-        side: 'right',
+    var gamesSurface=new Surface({
+        size: [50, 50],
         properties: {
-            background: 'blue'
+            background: 'red'
+        }
+    });
+
+    var sideBar = SideBar({
+        size: [75, undefined],
+        origin: [0, 0.5],
+        opacity: 0.7,
+        transition: {duration: 500,curve: 'easeOut'},
+        content: [gamesSurface],
+        properties: {
+            background: 'black',
+            //borderRadius: '20px'
         }
     });
 
