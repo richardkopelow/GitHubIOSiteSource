@@ -26,11 +26,15 @@ define(function (require, exports, module) {
             properties: options.properties
         });
         var sequence=new ScrollView({
-            size: [50,400],//options.size,
+            size: options.size,
             direction: 1,
-            spacing: 20
+            spacing: 20,
+            marginTop: 20,
+            marginBottom: 20
         });
         sequence.addItems(options.content);
+        bar
+            .add(sequence)
 
         node.show = function (callback)
         {
@@ -55,8 +59,7 @@ define(function (require, exports, module) {
                 align: positionMod?[0, 0.5]:[1, 0.5],
                 transform: barTransform.map(function (x){return Transform.translateX(x);})
             })
-            .add(bar)
-            .add(sequence);
+            .add(bar);
         return node;
     }
     module.exports = SideBar;
