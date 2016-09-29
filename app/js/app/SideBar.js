@@ -5,6 +5,7 @@ define(function (require, exports, module) {
     var Surface = require('samsara/dom/Surface');
     var ContainerSurface = require('samsara/dom/ContainerSurface');
     var ScrollView = require('samsara/layouts/ScrollView');
+    var Icon = require('./Icon');
 
     function SideBar(options)
     {
@@ -32,7 +33,24 @@ define(function (require, exports, module) {
             marginTop: 20,
             marginBottom: 20
         });
-        sequence.addItems(options.content);
+
+        var icons = [];
+        for(var i = 0; i < options.content.length; i++)
+        {
+            var iconContainer= new ContainerSurface({
+                size:[options.size[0], options.size[0]-(options.size[0]-options.iconSize)/2],
+            });
+            var icon = new Icon({
+                size: [options.iconSize, options.iconSize],
+                origin: [0.5, 1],
+                src: options.content[i].src
+            });
+            iconContainer
+                .add({align: [0.5, 1]})
+                .add(icon);
+            icons.push(iconContainer);
+        }
+        sequence.addItems(icons);
         bar
             .add(sequence)
 
