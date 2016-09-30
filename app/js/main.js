@@ -6,21 +6,22 @@ define(function (require, exports, module) {
     var IconContainer = require('app/IconContainer');
 
     var sideBar = SideBar({
-        size: [75, undefined],
+        size: [90, undefined],
         origin: [0, 0.5],
         opacity: 1,
-        iconSize: 50,
+        iconSize: 80,
         transition: {duration: 500,curve: 'easeOut'},
-        content: [{src: 'Assets/unityLogos/unity-logo-white.png'},
+        content: [{src: 'Assets/unityLogos/unity-logo.png'},
                   {src: 'http://3.bp.blogspot.com/-PTty3CfTGnA/TpZOEjTQ_WI/AAAAAAAAAeo/KeKt_D5X2xo/s1600/js.jpg'}],
         properties: {
-            background: 'black',
+            background: 'Black',
             //borderRadius: '20px'
         }
     });
 
     var gameContainer = IconContainer({
-        iconSize: 100
+        iconSize: 150,
+        padding: 20
     });
     gameContainer.setIcons([
         {

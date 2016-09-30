@@ -5,12 +5,25 @@ define(function (require, exports, module) {
     function Icon(options)
     {
         options = options || {};
-        options.tagName = options.tagName || 'img';
-        options.attributes = options.attributes || {src: options.src};
-        var picture = new Surface(options);
-        picture.on('click', options.onClick);
 
-        return picture;
+        var iconBackground=new ContainerSurface(options);
+        var picture = new Surface({
+            tagName: 'img',
+            size: options.innerSize || options.size,
+            attributes: {
+                src: options.src}
+        });
+        if(options.innerSize)
+        {
+            picture.setSize(options.innerSize);
+        }
+        picture.setOrigin([0.5, 0.5]);
+        picture.on('click', options.onClick);
+        iconBackground
+            .add({align: [0.5, 0.5]})
+            .add(picture);
+
+        return iconBackground;
     }
     
     module.exports = Icon;

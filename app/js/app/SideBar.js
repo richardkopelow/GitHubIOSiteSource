@@ -42,8 +42,12 @@ define(function (require, exports, module) {
             });
             var icon = new Icon({
                 size: [options.iconSize, options.iconSize],
+                innerSize: [options.iconSize-10,options.iconSize-10],
                 origin: [0.5, 1],
-                src: options.content[i].src
+                src: options.content[i].src,
+                properties: {
+                    background: 'white'
+                }
             });
             iconContainer
                 .add({align: [0.5, 1]})
