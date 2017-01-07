@@ -6,6 +6,8 @@ define(function (require, exports, module) {
     var Transform = require('samsara/core/Transform');
     var HeaderFooterLayout = require('samsara/layouts/HeaderFooterLayout');
     var Scrollview = require('samsara/layouts/Scrollview');
+    var AboutPage = require('app/AboutPage');
+    var GamePage = require('app/GamePage');
 
     var headerSize = new Transitionable([undefined, 0]);
     var header = new Surface({
@@ -13,7 +15,8 @@ define(function (require, exports, module) {
         size : headerSize,
         content : 'Richard Kopelow',
         properties : {
-            background : '#e0e0e0'
+            background : '#0288d1',
+            color : 'white'
         }
     });
 
@@ -34,37 +37,65 @@ define(function (require, exports, module) {
     });
 
     var pages = [];
+    var beforeHeights = [];
+    function onScreenMapper(index) {
+        return function (value) {
+            value = -value;
+            var height = pages[index].getSize()[1];
+            if(value <= beforeHeights[index] && value >= beforeHeights[index + 1] - window.innerHeight) {
+                return 1;
+            }
+            var dif = value - beforeHeights[index];
+            if (dif < height && dif > 0) {
+                return 1 - (dif / height);
+            }
+            dif = beforeHeights[index + 1] - window.innerHeight - value;
+            if (dif < height && dif > 0) {
+                return 1 - (dif / height);
+            }
+            return 0;
+        };
+    }
     var contentScroll = new Scrollview({
 
     });
 
-    var aboutPage = new ContainerSurface({
-        size: [undefined, 400]
-    });
-    var aboutHeader = new Surface({
-        content : '<h2>About Me</h2>',
+    var aboutPage = AboutPage({
+        size: [undefined, 400],
         properties : {
-            textAlign : 'center'
-        }
+            background : '#03a9f4'
+        },
+        transitionable : contentScroll.position.map(onScreenMapper(0))
     });
-    var aboutText = new Surface({
-        tagName : 'p',
-        content : 'I\'m Richard Kopelow, I am an undergraduate Computer Engineering major at Stevens Institute of Technology. I program and I make games as a hobby, this is a place where you can see some of my stuff.',
-        properties : {
-            paddingTop : '65px',
-            paddingBottom : '50px',
-            paddingLeft : '50px',
-            paddingRight : '50px'
-        }
-    });
-    aboutPage.add(aboutHeader);
-    aboutPage
-        .add({transform : Transform.translate([0, 0, 0])})
-        .add(aboutText);
-    pages.push(aboutPage);
-    contentScroll.addItems(pages);
+    pages.push(aboutPage)
 
-    
+    var substancePage = new ContainerSurface({
+        size : [undefined, 400],
+        properties : {
+        }
+    });
+
+    pages.push(substancePage);
+
+    var gamesPage = GamePage({
+        size: [undefined, 400],
+        properties : {
+            background : '#03a9f4'
+        },
+        transitionable : contentScroll.position.map(onScreenMapper(2))
+    });
+    pages.push(gamesPage);
+
+    for(var i = 0; i <= pages.length; i++) {
+        beforeHeights[i] = 0;
+        for(var j = 0; j < i; j++) {
+            beforeHeights[i] += pages[j].getSize()[1];
+        }
+    }
+    contentScroll.addItems(pages);
+    contentScroll.position.on('update', function(value) {
+        console.log(value);
+    });
 
     var layout = new HeaderFooterLayout({
         header : header,
