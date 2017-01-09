@@ -7,6 +7,7 @@ define(function (require, exports, module) {
     var HeaderFooterLayout = require('samsara/layouts/HeaderFooterLayout');
     var Scrollview = require('samsara/layouts/Scrollview');
     var AboutPage = require('app/AboutPage');
+    var SubstancePage = require('app/SubstancePage');
     var GamePage = require('app/GamePage');
 
     var headerSize = new Transitionable([undefined, 0]);
@@ -41,6 +42,12 @@ define(function (require, exports, module) {
     function onScreenMapper(index) {
         return function (value) {
             value = -value;
+            if(value > beforeHeights[beforeHeights.length - 1]) {
+                value = beforeHeights[beforeHeights.length - 1];
+            }
+            if(value < 0) {
+                value = 0;
+            }
             var height = pages[index].getSize()[1];
             if(value <= beforeHeights[index] && value >= beforeHeights[index + 1] - window.innerHeight) {
                 return 1;
@@ -69,10 +76,14 @@ define(function (require, exports, module) {
     });
     pages.push(aboutPage)
 
-    var substancePage = new ContainerSurface({
+    var scrollHeight = window.innerHeight;
+    var substancePage = SubstancePage({
         size : [undefined, 400],
         properties : {
-        }
+        },
+        transitionable : contentScroll.position.map(function(value) {
+            return value / (beforeHeights[beforeHeights.length - 1] - scrollHeight);
+        })
     });
 
     pages.push(substancePage);
@@ -95,6 +106,9 @@ define(function (require, exports, module) {
     contentScroll.addItems(pages);
     contentScroll.position.on('update', function(value) {
         console.log(value);
+    });
+    contentScroll.on('resize', function(size) {
+    scrollHeight = size[1];
     });
 
     var layout = new HeaderFooterLayout({
