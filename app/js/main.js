@@ -12,12 +12,12 @@ define(function (require, exports, module) {
 
     var headerSize = new Transitionable([undefined, 0]);
     var header = new Surface({
-        classes : ['dropdown-header'],
-        size : headerSize,
-        content : 'Richard Kopelow',
-        properties : {
-            background : '#0288d1',
-            color : 'white'
+        classes: ['dropdown-header'],
+        size: headerSize,
+        content: 'Richard Kopelow',
+        properties: {
+            background: '#0288d1',
+            color: 'white'
         }
     });
 
@@ -25,16 +25,16 @@ define(function (require, exports, module) {
     var footerLargeSize = 50;
     var footerSize = new Transitionable([undefined, 0]);
     var footer = new Surface({
-        size : footerSize,
-        properties : {
-            background : '#212121'
+        size: footerSize,
+        properties: {
+            background: '#212121'
         }
     });
-    footer.on('mouseover', function() {
-        footerSize.set([undefined, footerLargeSize],{duration : 1000, curve: 'easeOut'});
+    footer.on('mouseover', function () {
+        footerSize.set([undefined, footerLargeSize], { duration: 1000, curve: 'easeOut' });
     });
-    footer.on('mouseout', function() {
-        footerSize.set([undefined, footerNormalSize],{duration : 1000, curve: 'easeOut'});
+    footer.on('mouseout', function () {
+        footerSize.set([undefined, footerNormalSize], { duration: 1000, curve: 'easeOut' });
     });
 
     var pages = [];
@@ -42,14 +42,14 @@ define(function (require, exports, module) {
     function onScreenMapper(index) {
         return function (value) {
             value = -value;
-            if(value > beforeHeights[beforeHeights.length - 1]) {
+            if (value > beforeHeights[beforeHeights.length - 1]) {
                 value = beforeHeights[beforeHeights.length - 1];
             }
-            if(value < 0) {
+            if (value < 0) {
                 value = 0;
             }
             var height = pages[index].getSize()[1];
-            if(value <= beforeHeights[index] && value >= beforeHeights[index + 1] - window.innerHeight) {
+            if (value <= beforeHeights[index] && value >= beforeHeights[index + 1] - window.innerHeight) {
                 return 1;
             }
             var dif = value - beforeHeights[index];
@@ -69,19 +69,19 @@ define(function (require, exports, module) {
 
     var aboutPage = AboutPage({
         size: [undefined, 400],
-        properties : {
-            background : '#03a9f4'
+        properties: {
+            background: '#03a9f4'
         },
-        transitionable : contentScroll.position.map(onScreenMapper(0))
+        transitionable: contentScroll.position.map(onScreenMapper(0))
     });
     pages.push(aboutPage)
 
     var scrollHeight = window.innerHeight;
     var substancePage = SubstancePage({
-        size : [undefined, 400],
-        properties : {
+        size: [undefined, 400],
+        properties: {
         },
-        transitionable : contentScroll.position.map(function(value) {
+        transitionable: contentScroll.position.map(function (value) {
             return value / (beforeHeights[beforeHeights.length - 1] - scrollHeight);
         })
     });
@@ -90,31 +90,31 @@ define(function (require, exports, module) {
 
     var gamesPage = GamePage({
         size: [undefined, 400],
-        properties : {
-            background : '#03a9f4'
+        properties: {
+            background: '#03a9f4'
         },
-        transitionable : contentScroll.position.map(onScreenMapper(2))
+        transitionable: contentScroll.position.map(onScreenMapper(2))
     });
     pages.push(gamesPage);
 
-    for(var i = 0; i <= pages.length; i++) {
+    for (var i = 0; i <= pages.length; i++) {
         beforeHeights[i] = 0;
-        for(var j = 0; j < i; j++) {
+        for (var j = 0; j < i; j++) {
             beforeHeights[i] += pages[j].getSize()[1];
         }
     }
     contentScroll.addItems(pages);
-    contentScroll.position.on('update', function(value) {
+    contentScroll.position.on('update', function (value) {
         console.log(value);
     });
-    contentScroll.on('resize', function(size) {
-    scrollHeight = size[1];
+    contentScroll.on('resize', function (size) {
+        scrollHeight = size[1];
     });
 
     var layout = new HeaderFooterLayout({
-        header : header,
-        content : contentScroll,
-        footer : footer
+        header: header,
+        content: contentScroll,
+        footer: footer
     });
 
     // Create a Samsara Context as the root of the render tree
@@ -124,6 +124,6 @@ define(function (require, exports, module) {
     // Mount the context to a DOM element
     context.mount(document.body);
 
-    headerSize.set([undefined, 40],{duration : 1000, curve: 'easeOut'});
-    footerSize.set([undefined, footerNormalSize],{duration : 1000, curve: 'easeOut'});
+    headerSize.set([undefined, 40], { duration: 1000, curve: 'easeOut' });
+    footerSize.set([undefined, footerNormalSize], { duration: 1000, curve: 'easeOut' });
 });
