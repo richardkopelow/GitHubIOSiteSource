@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     var AboutPage = require('app/AboutPage');
     var SubstancePage = require('app/SubstancePage');
     var GamePage = require('app/GamePage');
+    var ProgrammingPage = require('app/ProgrammingPage');
 
     var headerSize = new Transitionable([undefined, 0]);
     var header = new Surface({
@@ -24,7 +25,7 @@ define(function (require, exports, module) {
     var footerNormalSize = 25;
     var footerLargeSize = 50;
     var footerSize = new Transitionable([undefined, 0]);
-    var footer = new Surface({
+    var footer = new ContainerSurface({
         size: footerSize,
         properties: {
             background: '#212121'
@@ -36,6 +37,15 @@ define(function (require, exports, module) {
     footer.on('mouseout', function () {
         footerSize.set([undefined, footerNormalSize], { duration: 1000, curve: 'easeOut' });
     });
+    var githubLink = new Surface({
+        tagName: 'a',
+        size: [true, true],
+        content: 'github.com/richardkopelow',
+        attributes: {
+            href: 'http://github.com/richardkopelow'
+        }
+    });
+    footer.add(githubLink);
 
     var pages = [];
     var beforeHeights = [];
@@ -70,7 +80,7 @@ define(function (require, exports, module) {
     var aboutPage = AboutPage({
         size: [undefined, 400],
         properties: {
-            background: '#03a9f4'
+            background: 'white'//'#03a9f4'
         },
         transitionable: contentScroll.position.map(onScreenMapper(0))
     });
@@ -96,6 +106,11 @@ define(function (require, exports, module) {
         transitionable: contentScroll.position.map(onScreenMapper(2))
     });
     pages.push(gamesPage);
+
+    var programmingPage = ProgrammingPage({
+        size: [undefined, 400]
+    });
+    pages.push(programmingPage);
 
     for (var i = 0; i <= pages.length; i++) {
         beforeHeights[i] = 0;

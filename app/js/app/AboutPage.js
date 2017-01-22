@@ -11,7 +11,7 @@ define(function (require, exports, module) {
             content: '<h2>About Me</h2>',
             opacity: options.transitionable,
             properties: {
-                textAlign: 'center'
+                paddingLeft: '50px'
             }
         });
         var aboutText = new Surface({
