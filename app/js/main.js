@@ -99,7 +99,7 @@ define(function (require, exports, module) {
     pages.push(substancePage);
 
     var gamesPage = GamePage({
-        size: [undefined, 400],
+        size: [undefined, 500],
         properties: {
             background: '#03a9f4'
         },

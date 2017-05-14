@@ -7,7 +7,7 @@ define(function (require, exports, module) {
 
     function GamePage(options) {
         var page = ScrollPage(options);
-        var partHeight = options.size[1] / 3;
+        var partHeight = options.size[1] / 4;
         var title = new Surface({
             size: [undefined, partHeight],
             content: '<h2>Games</h2>',
@@ -24,6 +24,39 @@ define(function (require, exports, module) {
         page
             .add({ transform: titlePosition })
             .add(title);
+        
+        var flipSlab = GameSlab({
+            size: [window.innerWidth / 2, partHeight],
+            text: 'Flip is a caual mobile puzzle game in which you flip over tiles to clear.',
+            icon: 'https://img.itch.zone/aW1hZ2UvMTE5MDIzLzYwMDc4OS5wbmc=/315x250%23c/4pVmIx.png',
+            url: 'https://play.google.com/store/apps/details?id=com.RichardKopelow.Flip'
+        });
+        var flipAlign = options.transitionable.map(function (value) {
+            value = value > 6 / 8 ? 1 : value * 8 / 6;
+            return [value / 2, 0];
+        });
+        page
+            .add({
+                align: flipAlign,
+                transform: Transform.translate([0, partHeight, 0])
+            }).add(flipSlab);
+        
+        var zipMinerSlab = GameSlab({
+            right: true,
+            size: [window.innerWidth / 2, partHeight],
+            text: 'ZipMiner is a casual clicker game in which you dig through the earth to earn money, to buy upgrades, to dig through the earth better.<br>This was made as part of the 1-bit Clicker Jam on Itch.io',
+            icon: 'https://img.itch.zone/aW1hZ2UvMTM0NDc0LzYzNzA2OS5wbmc=/347x500/q3QU%2Ba.png',
+            url: 'https://richardkopelow.itch.io/zipminer'
+        });
+        var zipMinerAlign = options.transitionable.map(function (value) {
+            value = value > 6 / 8 ? 1 : value * 8 / 6;
+            return [1 - value / 2, 0];
+        });
+        page
+            .add({
+                align: zipMinerAlign,
+                transform: Transform.translate([0, partHeight, 0])
+            }).add(zipMinerSlab);
 
         var operationPegasusSlab = GameSlab({
             size: [window.innerWidth / 2, partHeight],
@@ -38,7 +71,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: operationPegasusAlign,
-                transform: Transform.translate([0, partHeight, 0])
+                transform: Transform.translate([0, partHeight*2, 0])
             }).add(operationPegasusSlab);
 
         var oneBulletSlab = GameSlab({
@@ -55,7 +88,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: oneBulletAlign,
-                transform: Transform.translate([0, partHeight, 0])
+                transform: Transform.translate([0, partHeight*2, 0])
             }).add(oneBulletSlab);
 
         var weAllScreamSlab = GameSlab({
@@ -70,7 +103,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: weAllScreamAlign,
-                transform: Transform.translate([0, partHeight * 2, 0])
+                transform: Transform.translate([0, partHeight * 3, 0])
             }).add(weAllScreamSlab);
 
         var pulseWidthSlab = GameSlab({
@@ -87,7 +120,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: pulseWidthAlign,
-                transform: Transform.translate([0, partHeight * 2, 0])
+                transform: Transform.translate([0, partHeight * 3, 0])
             }).add(pulseWidthSlab);
 
         page.on('resize', function (size) {
