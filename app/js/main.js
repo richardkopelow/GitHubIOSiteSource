@@ -108,7 +108,8 @@ define(function (require, exports, module) {
     pages.push(gamesPage);
 
     var programmingPage = ProgrammingPage({
-        size: [undefined, 400]
+        size: [undefined, 400],
+        transitionable: contentScroll.position.map(onScreenMapper(3))
     });
     pages.push(programmingPage);
 

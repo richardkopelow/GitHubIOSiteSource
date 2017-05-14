@@ -16,7 +16,7 @@ define(function (require, exports, module) {
         });
         var aboutText = new Surface({
             tagName: 'p',
-            content: 'I\'m Richard Kopelow, I am an undergraduate Computer Engineering major at Stevens Institute of Technology. I program and I make games as a hobby, this is a place where you can see some of my stuff.',
+            content: 'I\'m Richard Kopelow, I am an undergraduate Computer Engineering major at Stevens Institute of Technology. I am a programmer and a member of the Stevens Game Development Club. I love VR development. This is a place where you can find some of my stuff.',
             opacity: options.transitionable,
             properties: {
                 paddingTop: '65px',

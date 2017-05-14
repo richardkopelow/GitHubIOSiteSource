@@ -27,7 +27,7 @@ define(function (require, exports, module) {
         
         var flipSlab = GameSlab({
             size: [window.innerWidth / 2, partHeight],
-            text: 'Flip is a caual mobile puzzle game in which you flip over tiles to clear.',
+            text: 'Flip is a thumb twiddling puzzle game in which you flip over tiles to make them all light. Clear the board and move on to the next one.',
             icon: 'https://img.itch.zone/aW1hZ2UvMTE5MDIzLzYwMDc4OS5wbmc=/315x250%23c/4pVmIx.png',
             url: 'https://play.google.com/store/apps/details?id=com.RichardKopelow.Flip'
         });
@@ -109,7 +109,7 @@ define(function (require, exports, module) {
         var pulseWidthSlab = GameSlab({
             right: true,
             size: [window.innerWidth / 2, partHeight],
-            text: 'Pulse Width is a VR platformer for the HTC Vive. Use the Pulse Guns to push or pull on metal objects. Fling them, and yourself around the level to get to the goal.',
+            text: 'Pulse Width is a VR platformer for the HTC Vive. Use the Pulse Guns to push or pull on metal objects. Fling them, and yourself around the level to get to the goal. I only had 48 hours durring a game jam to make this because I don\'t own a Vive so it is not polished but I think it is incredibly fun.',
             icon: 'https://img.itch.io/aW1hZ2UvODcxNzgvNTEyNDM3LnBuZw==/347x500/oMJ7is.png',
             url: 'https://richardkopelow.itch.io/pulse-width'
         });
@@ -124,6 +124,8 @@ define(function (require, exports, module) {
             }).add(pulseWidthSlab);
 
         page.on('resize', function (size) {
+            flipSlab.setSize([size[0] / 2, partHeight]);
+            zipMinerSlab.setSize([size[0] / 2, partHeight]);
             operationPegasusSlab.setSize([size[0] / 2, partHeight]);
             oneBulletSlab.setSize([size[0] / 2, partHeight]);
             weAllScreamSlab.setSize([size[0] / 2, partHeight]);

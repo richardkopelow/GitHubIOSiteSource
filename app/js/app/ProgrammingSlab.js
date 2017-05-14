@@ -7,40 +7,41 @@ define(function (require, exports, module) {
 
     function ProgrammingSlab(options) {
         var view = new View({
-            size: [200, 200]
-        });
-        var flip = new Transitionable(0);
-        var flipTransform = flip.map(function (angle) {
-            return Transform.rotateY(angle);
-        });
-        var slabFront = new ContainerSurface({
             origin: [0.5, 0.5],
-            content: 'front',
+            size: options.size
+        });
+        var surf = new Surface({
+            content: options.text,
             properties: {
-                background: 'grey'
+                background: options.properties.background,
+                paddingTop: options.size[1] * 7/12+'px',
+                paddingLeft: '20px',
+                paddingRight: '20px'
             }
         });
-        slabFront.on('mouseover', function () {
-            flip.set(Math.PI, { duration: 500 });
-        });
-        var slabBack = new ContainerSurface({
+        view.add(surf);
+
+        var icon = new Surface({
+            tagName: 'img',
+            size: [options.size[1]/3, options.size[1]/3],
             origin: [0.5, 0.5],
-            content: 'Back',
+            attributes: {
+                src: options.icon
+            },
             properties: {
-                background: 'red'
+                background: '#ffc400',
+                borderRadius: '20px'
             }
         });
-        slabBack.on('mouseout', function () {
-            flip.set(0, { duration: 500 });
+        icon.on('click', function () {
+            window.open(options.url);
         });
+        view.add({align: [0.5, 1/3]}).add(icon);
 
-        var rotationHanger = view.add({
-            align: [0.5, 0.5],
-            transform: flipTransform
-        });
-
-        rotationHanger.add(slabFront);
-        rotationHanger.add({ transform: Transform.composeMany(Transform.rotateY(Math.PI), Transform.translate([0, 0, 10])) }).add(slabBack);
+        view._setSize = view.setSize;
+        view.setSize = function (size) {
+            view._setSize(size);
+        }
 
         return view;
     }
