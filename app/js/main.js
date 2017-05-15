@@ -87,6 +87,7 @@ define(function (require, exports, module) {
     pages.push(aboutPage)
 
     var scrollHeight = window.innerHeight;
+    /*
     var substancePage = SubstancePage({
         size: [undefined, 400],
         properties: {
@@ -95,21 +96,21 @@ define(function (require, exports, module) {
             return value / (beforeHeights[beforeHeights.length - 1] - scrollHeight);
         })
     });
-
     pages.push(substancePage);
+    */
 
     var gamesPage = GamePage({
         size: [undefined, 500],
         properties: {
             background: '#03a9f4'
         },
-        transitionable: contentScroll.position.map(onScreenMapper(2))
+        transitionable: contentScroll.position.map(onScreenMapper(1))
     });
     pages.push(gamesPage);
 
     var programmingPage = ProgrammingPage({
         size: [undefined, 400],
-        transitionable: contentScroll.position.map(onScreenMapper(3))
+        transitionable: contentScroll.position.map(onScreenMapper(2))
     });
     pages.push(programmingPage);
 
