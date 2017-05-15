@@ -34,7 +34,7 @@ define(function (require, exports, module) {
         var generatorSamsara = ProgrammingSlab({
             size: targetSize,
             text: 'generator-samsara is a Yeoman generator for the Samsara javascript framework. It can be used with Yeoman to generate boilerplate projects based off of any of the Samsara demo projects. The projects are set up with a live reload dev server and tools to package your site for deployment',
-            icon: '',
+            icon: 'assets/Icons/GeneratorSamsara.png',
             url: 'https://github.com/richardkopelow/generator-samsara',
             properties: {
                 background: 'grey'
