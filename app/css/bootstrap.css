@@ -230,12 +230,14 @@ th {
   }
   p,
   h2,
-  h3 {
+  h3,
+  hx {
     orphans: 3;
     widows: 3;
   }
   h2,
-  h3 {
+  h3,
+  hx {
     page-break-after: avoid;
   }
   .navbar {
@@ -1177,6 +1179,7 @@ h3,
 h4,
 h5,
 h6,
+hx,
 .h1,
 .h2,
 .h3,
@@ -1185,7 +1188,6 @@ h6,
 .h6 {
   font-family: inherit;
   font-weight: 500;
-  line-height: 1.1;
   color: inherit;
 }
 h1 small,
@@ -1267,7 +1269,8 @@ h1,
   font-size: 36px;
 }
 h2,
-.h2 {
+.h2,
+hx {
   font-size: 30px;
 }
 h3,

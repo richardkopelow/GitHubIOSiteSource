@@ -9,7 +9,7 @@ define(function (require, exports, module) {
         });
 
         page.setTransitionable = function(transitionable) {
-
+            options.transitionable = transitionable;
         }
 
         return page;

@@ -10,10 +10,11 @@ define(function (require, exports, module) {
         var partHeight = options.size[1] / 4;
         var title = new Surface({
             size: [undefined, partHeight],
-            content: '<h2>Games</h2>',
+            content: '<hx>Games</hx>',
             properties: {
                 textAlign: 'center',
-                background: '#e0e0e0'
+                background: '#e0e0e0',
+                lineHeight: partHeight + 'px'
             }
         });
         var titlePosition = options.transitionable.map(function (value) {

@@ -10,6 +10,7 @@ define(function (require, exports, module) {
     var SubstancePage = require('app/SubstancePage');
     var GamePage = require('app/GamePage');
     var ProgrammingPage = require('app/ProgrammingPage');
+    var ShaderPage = require('app/ShaderPage');
 
     var headerSize = new Transitionable([undefined, 0]);
     var header = new Surface({
@@ -17,7 +18,7 @@ define(function (require, exports, module) {
         size: headerSize,
         content: 'Richard Kopelow',
         properties: {
-            background: '#0288d1',
+            background: '#212121',
             color: 'white'
         }
     });
@@ -31,12 +32,14 @@ define(function (require, exports, module) {
             background: '#212121'
         }
     });
+    /*
     footer.on('mouseover', function () {
         footerSize.set([undefined, footerLargeSize], { duration: 1000, curve: 'easeOut' });
     });
     footer.on('mouseout', function () {
         footerSize.set([undefined, footerNormalSize], { duration: 1000, curve: 'easeOut' });
     });
+    */
     var githubLink = new Surface({
         tagName: 'a',
         size: [true, true],
@@ -113,6 +116,12 @@ define(function (require, exports, module) {
         transitionable: contentScroll.position.map(onScreenMapper(2))
     });
     pages.push(programmingPage);
+
+    var shaderPage = ShaderPage({
+        size: [undefined, 400],
+        transitionable: contentScroll.position.map(onScreenMapper(3))
+    });
+    pages.push(shaderPage);
 
     for (var i = 0; i <= pages.length; i++) {
         beforeHeights[i] = 0;

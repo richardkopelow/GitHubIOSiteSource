@@ -18,11 +18,12 @@ define(function (require, exports, module) {
 
         var title = new Surface({
             size: [undefined, options.size[1] * 0.2],
-            content: '<h2>Programming</h2>',
+            content: '<hx>Programming</hx>',
             origin: [0.5, 0.5],
             properties: {
                 textAlign: 'center',
-                background: 'grey'
+                background: 'grey',
+                lineHeight: options.size[1] * 0.2 + 'px'
             }
         });
         page.add({
