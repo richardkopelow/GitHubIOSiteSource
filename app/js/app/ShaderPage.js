@@ -44,6 +44,13 @@ define(function (require, exports, module) {
         });
         shaderSurfs.push(tentacles);
 
+        var destruction = ShaderSlab({
+            height: options.size[1],
+            text: 'This destruction shader takes up to 10 origin points that can be expanded to cut away at the model. The color and thicknes of the band can be configured. A script is used ot manage the origin points and the level of expansion. This effect can be used for destroying or spawning objects.',
+            image: 'https://fat.gfycat.com/NextBoilingCooter.gif'
+        });
+        shaderSurfs.push(destruction);
+
         shaderScroll.addItems(shaderSurfs);
         /*
         page.on('resize', function (size) {

@@ -10,16 +10,16 @@ define(function (require, exports, module) {
             size: [true, undefined]
         });
 
-        var image = new ContainerSurface({
+        var container = new ContainerSurface({
             size: [options.height*541/304, undefined]
         });
-        var imageEventCatcher = new Surface({
+        var image = new Surface({
             tagName: 'img',
             attributes: {
                 src: options.image
             }
         });
-        image.add(imageEventCatcher);
+        container.add(image);
 
         var textSurfacePosition = new Transitionable([0, options.height]);
         var textSurface = new Surface({
@@ -30,18 +30,27 @@ define(function (require, exports, module) {
                 background: 'black'
             }
         });
-        image.add({
+        container.add({
             transform: textSurfacePosition.map(function(val) {return Transform.translate(val);})
         }).add(textSurface);
-        imageEventCatcher.on('mouseover', function () {
+
+        image.on('mouseover', function (event) {
             textSurfacePosition.set([0, options.height - 100], { duration: 500, curve: 'easeOut' });
         });
-        
-        imageEventCatcher.on('mouseout', function () {
-            textSurfacePosition.set([0, options.height], { duration: 500, curve: 'easeOut' });
+        image.on('mouseout', function (event) {
+            if (event.relatedTarget != textSurface._currentTarget)
+            {
+                textSurfacePosition.set([0, options.height], { duration: 500, curve: 'easeOut' });
+            }
+        });
+        textSurface.on('mouseout', function (event) {
+            if (event.relatedTarget != image._currentTarget)
+            {
+                textSurfacePosition.set([0, options.height], { duration: 500, curve: 'easeOut' });
+            }
         });
         
-        return image;
+        return container;
     }
     module.exports = ShaderSlab;
 });
