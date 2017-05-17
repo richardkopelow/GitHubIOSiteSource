@@ -16,7 +16,7 @@ define(function (require, exports, module) {
         });
         var aboutText = new Surface({
             tagName: 'p',
-            content: '<h4>I\'m Richard Kopelow, I am an undergraduate Computer Engineering student at Stevens Institute of Technology. I am a programmer and a member of the Stevens Game Development Club. I love VR development. This is a place where you can find some of my stuff.</h4>',
+            content: 'I\'m Richard Kopelow, I am an undergraduate Computer Engineering student at Stevens Institute of Technology. I am a programmer and a member of the Stevens Game Development Club. I love VR development. This is a place where you can find some of my stuff.',
             opacity: options.transitionable,
             properties: {
                 paddingTop: '65px',

@@ -21,21 +21,44 @@ define(function (require, exports, module) {
         });
         container.add(image);
 
+        var textSurfaceHeight = 150;
         var textSurfacePosition = new Transitionable([0, options.height]);
         var textSurface = new Surface({
-            size: [undefined, 100],
+            size: [undefined, textSurfaceHeight],
             content: options.text,
             properties: {
                 color: 'white',
                 background: 'black'
             }
         });
-        container.add({
+
+        var downloadLink = new Surface({
+            size: [options.height*541/304 - 20, 40],
+            origin: [0.5, 1],
+            content: 'Download',
+            properties: {
+                background: '#c9c9c9',
+                borderRadius: '15px',
+                textAlign: 'center',
+                lineHeight: '40px'
+            }
+        });
+        
+        downloadLink.on('click', function () {
+            window.open(options.downloadLink);
+        });
+        
+        var textHanger = container.add({
             transform: textSurfacePosition.map(function(val) {return Transform.translate(val);})
-        }).add(textSurface);
+        });
+        textHanger.add(textSurface);
+        textHanger.add({
+            align: [0.5, 0],
+            transform: Transform.translateY(textSurfaceHeight - 15)
+        }).add(downloadLink);
 
         image.on('mouseover', function (event) {
-            textSurfacePosition.set([0, options.height - 100], { duration: 500, curve: 'easeOut' });
+            textSurfacePosition.set([0, options.height - textSurfaceHeight], { duration: 500, curve: 'easeOut' });
         });
         image.on('mouseout', function (event) {
             if (event.relatedTarget != textSurface._currentTarget)
@@ -44,7 +67,7 @@ define(function (require, exports, module) {
             }
         });
         textSurface.on('mouseout', function (event) {
-            if (event.relatedTarget != image._currentTarget)
+            if (event.relatedTarget != image._currentTarget && event.relatedTarget != downloadLink._currentTarget)
             {
                 textSurfacePosition.set([0, options.height], { duration: 500, curve: 'easeOut' });
             }
