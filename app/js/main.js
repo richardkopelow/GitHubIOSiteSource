@@ -6,15 +6,17 @@ define(function (require, exports, module) {
     var Transform = require('samsara/core/Transform');
     var HeaderFooterLayout = require('samsara/layouts/HeaderFooterLayout');
     var Scrollview = require('samsara/layouts/Scrollview');
+    var SequentialLayout = require('samsara/layouts/SequentialLayout');
     var AboutPage = require('app/AboutPage');
     var SubstancePage = require('app/SubstancePage');
     var GamePage = require('app/GamePage');
     var ProgrammingPage = require('app/ProgrammingPage');
     var ShaderPage = require('app/ShaderPage');
 
+    var headerHeight = 50;
     var headerSize = new Transitionable([undefined, 0]);
-    var header = new Surface({
-        classes: ['dropdown-header'],
+    var header = new ContainerSurface({
+        //classes: ['dropdown-header'],
         size: headerSize,
         content: 'Richard Kopelow',
         properties: {
@@ -22,6 +24,71 @@ define(function (require, exports, module) {
             color: 'white'
         }
     });
+
+    var buttonWidth = 100;
+    var buttons = [];
+    var aboutButton = new Surface({
+        size: [buttonWidth, undefined],
+        content: 'About',
+        properties: {
+            background: '#e0e0e0',
+            color: 'black',
+            lineHeight: headerHeight + 'px'
+        }
+    });
+    buttons.push(aboutButton);
+    var gamesButton = new Surface({
+        size: [buttonWidth, undefined],
+        content: 'Games',
+        properties: {
+            background: '#e0e0e0',
+            color: 'black',
+            lineHeight: headerHeight + 'px'
+        }
+    });
+    buttons.push(gamesButton);
+    var programmingButton = new Surface({
+        size: [buttonWidth, undefined],
+        content: 'Programming',
+        properties: {
+            background: '#e0e0e0',
+            color: 'black',
+            lineHeight: headerHeight + 'px'
+        }
+    });
+    buttons.push(programmingButton);
+    var shadersButton = new Surface({
+        size: [buttonWidth, undefined],
+        content: 'Shaders',
+        properties: {
+            background: '#e0e0e0',
+            color: 'black',
+            lineHeight: headerHeight + 'px'
+        }
+    });
+    buttons.push(shadersButton);
+
+    var navigationSpacing = 5;
+    var navigationBar = new SequentialLayout({
+        size: [buttons.length*buttonWidth+navigationSpacing*buttons.length-1, undefined],
+        origin: [1, 0.5],
+        direction: SequentialLayout.DIRECTION.X,
+        spacing: navigationSpacing
+    });
+    header.add({
+        align: [1, 0],
+        transform: Transform.translateX(-30)
+    }).add(navigationBar);
+    for(var i=0;i<buttons.length;i++)
+    {
+        navigationBar.push(buttons[i]);
+        buttons[i].on('click', function() {
+            var index = i;
+            return function() {
+                contentScroll.goTo(index);
+            };
+        }());
+    }
 
     var footerNormalSize = 25;
     var footerLargeSize = 50;
@@ -130,9 +197,6 @@ define(function (require, exports, module) {
         }
     }
     contentScroll.addItems(pages);
-    contentScroll.position.on('update', function (value) {
-        console.log(value);
-    });
     contentScroll.on('resize', function (size) {
         scrollHeight = size[1];
     });
@@ -150,6 +214,6 @@ define(function (require, exports, module) {
     // Mount the context to a DOM element
     context.mount(document.body);
 
-    headerSize.set([undefined, 40], { duration: 1000, curve: 'easeOut' });
+    headerSize.set([undefined, headerHeight], { duration: 1000, curve: 'easeOut' });
     footerSize.set([undefined, footerNormalSize], { duration: 1000, curve: 'easeOut' });
 });
