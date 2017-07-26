@@ -10,10 +10,12 @@ define(function (require, exports, module) {
         var page = ScrollPage(options);
         var alpha = 0;
         var targetSize = [window.innerWidth / 3, options.size[1] * 0.8];
+        var loaded = false;
+
+        window.setTimeout(() => loaded = true, 300);//This is a hack to set the loaded variable afte the page is probably done loading, I couldn't find working load events
 
         var slabScale = options.transitionable.map(function (value){
-            alpha = value;
-            return Transform.scale([value, value, 1]);//[targetSize[0] * alpha, targetSize[1] * alpha];
+            return loaded ? Transform.scale([value, value, 1]) : Transform.scale(1, 1, 1);//[targetSize[0] * alpha, targetSize[1] * alpha];
         });
 
         var title = new Surface({
