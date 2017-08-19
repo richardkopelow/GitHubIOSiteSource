@@ -7,14 +7,14 @@ define(function (require, exports, module) {
 
     function GamePage(options) {
         var page = ScrollPage(options);
-        var partHeight = options.size[1] / 4;
+        var partHeight = (options.size[1] - 100) / 4;
         var title = new Surface({
-            size: [undefined, partHeight],
+            size: [undefined, 100],
             content: '<hx>Games</hx>',
             properties: {
                 textAlign: 'center',
                 background: '#e0e0e0',
-                lineHeight: partHeight + 'px'
+                lineHeight: 100 + 'px'
             }
         });
         var titlePosition = options.transitionable.map(function (value) {
@@ -39,7 +39,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: flipAlign,
-                transform: Transform.translate([0, partHeight, 0])
+                transform: Transform.translate([0, 100, 0])
             }).add(flipSlab);
         
         var zipMinerSlab = GameSlab({
@@ -56,7 +56,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: zipMinerAlign,
-                transform: Transform.translate([0, partHeight, 0])
+                transform: Transform.translate([0, 100, 0])
             }).add(zipMinerSlab);
 
         var operationPegasusSlab = GameSlab({
@@ -72,7 +72,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: operationPegasusAlign,
-                transform: Transform.translate([0, partHeight*2, 0])
+                transform: Transform.translate([0, partHeight + 100, 0])
             }).add(operationPegasusSlab);
 
         var oneBulletSlab = GameSlab({
@@ -89,7 +89,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: oneBulletAlign,
-                transform: Transform.translate([0, partHeight*2, 0])
+                transform: Transform.translate([0, partHeight + 100, 0])
             }).add(oneBulletSlab);
 
         var weAllScreamSlab = GameSlab({
@@ -104,7 +104,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: weAllScreamAlign,
-                transform: Transform.translate([0, partHeight * 3, 0])
+                transform: Transform.translate([0, partHeight * 2 + 100, 0])
             }).add(weAllScreamSlab);
 
         var pulseWidthSlab = GameSlab({
@@ -121,7 +121,7 @@ define(function (require, exports, module) {
         page
             .add({
                 align: pulseWidthAlign,
-                transform: Transform.translate([0, partHeight * 3, 0])
+                transform: Transform.translate([0, partHeight * 2 + 100, 0])
             }).add(pulseWidthSlab);
 
         page.on('resize', function (size) {

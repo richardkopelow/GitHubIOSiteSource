@@ -70,25 +70,36 @@ define(function (require, exports, module) {
 
     var navigationSpacing = 5;
     var navigationBar = new SequentialLayout({
-        size: [buttons.length*buttonWidth+navigationSpacing*buttons.length-1, undefined],
+        size: [buttons.length * buttonWidth + navigationSpacing * buttons.length, undefined],
         origin: [1, 0.5],
         direction: SequentialLayout.DIRECTION.X,
         spacing: navigationSpacing
     });
     header.add({
-        align: [1, 0],
-        transform: Transform.translateX(-30)
+        align: [1, 0]
     }).add(navigationBar);
-    for(var i=0;i<buttons.length;i++)
-    {
+    for (var i = 0; i < buttons.length; i++) {
         navigationBar.push(buttons[i]);
-        buttons[i].on('click', function() {
+        buttons[i].on('click', function () {
             var index = i;
-            return function() {
+            return function () {
                 contentScroll.goTo(index);
             };
         }());
     }
+
+    var sizeButtons = function () {
+        var halfSize = (window.innerWidth / 2 - (buttons.length - 1) * navigationSpacing) / buttons.length;
+        buttonWidth = 100 < halfSize ? 100 : halfSize;
+        buttons.forEach(function (element) {
+            element.setSize([buttonWidth, undefined]);
+            element.setProperties({
+                fontSize: 16/100*buttonWidth +'px'
+            });
+        navigationBar.setSize([buttons.length * buttonWidth + navigationSpacing * buttons.length, undefined]);
+        }, this);
+    }
+    sizeButtons();
 
     var footerNormalSize = 25;
     var footerLargeSize = 50;
@@ -170,7 +181,7 @@ define(function (require, exports, module) {
     */
 
     var gamesPage = GamePage({
-        size: [undefined, 500],
+        size: [undefined, 900],
         properties: {
             background: '#03a9f4'
         },
@@ -205,6 +216,9 @@ define(function (require, exports, module) {
         header: header,
         content: contentScroll,
         footer: footer
+    });
+    layout.on('resize', function () {
+        sizeButtons();
     });
 
     // Create a Samsara Context as the root of the render tree
